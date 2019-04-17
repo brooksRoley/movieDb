@@ -3,6 +3,7 @@ import './App.css';
 
 import { BASE_URL, API_KEY} from './constants';
 import PopularList from './components/PopularList';
+import Genres from './components/Genres';
 
 class App extends Component {
   state = {
@@ -60,6 +61,8 @@ class App extends Component {
         </form>
 
         <PopularList list={list} />
+
+        <Genres />
       </div>
     );
   }

@@ -8,6 +8,7 @@ export default class Movie extends React.Component {
       movie: {},
       castAndCrew: {},
       poster: '',
+      review: '',
     }
   }
 
@@ -37,13 +38,33 @@ export default class Movie extends React.Component {
     castAndCrew = JSON.parse(castAndCrew);
     this.setState({ movie, castAndCrew });
   }
+ 
+  postReview = async e => {
+    e.preventDefault();
+    let { review } = this.state;
+    console.log(review)
+    if(!!review){
+      const postReview = await fetch('/api/review', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        mode: "cors", // no-cors, cors, *same-origin
+        credentials: "same-origin", // include, *same-origin, omit
+        body: JSON.stringify({
+          review
+        }),
+      });
+      let response = await postReview.text();
+      alert(response);
+    }
+
+  }
 
   navigateBack = () => {
     this.props.history.push('/');
   }
 
   render() {
-  	const { movie, castAndCrew } = this.state;
+  	const { movie, castAndCrew, review } = this.state;
     const { cast } = castAndCrew;
     const {
       title,
@@ -82,6 +103,19 @@ export default class Movie extends React.Component {
             )
           })}
         </ul>
+
+        <form onSubmit={this.postReview}>
+          <input
+            type="text"
+            value={review}
+            placeholder="Submit your own review"
+            className="search-box"
+            onChange={e => this.setState({ review: e.target.value })}
+          />
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+
       </div>
     );
   }

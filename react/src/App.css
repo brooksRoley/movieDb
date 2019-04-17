@@ -97,15 +97,20 @@ input[type=text] {
   text-decoration: none;
 }
 
-.list-display li {
+.list-display ul {
   width: 75%;
+  margin: auto;
+}
+
+.list-display li {
   height: 3em;
-  line-height: 3em;
   margin: 5px auto;
+  line-height: 3em;
   background-color: #E27D60;
   border-radius: 3em;
   border: 3px solid #C38D9E;
 }
+
 button:hover, .list-display li:hover {
   background-color: #C38D9E;
 }
@@ -113,7 +118,8 @@ button:hover, .list-display li:hover {
 .movie-details {
   width: 80%;
   text-align: center;
-  margin: auto;
+  margin: 0 auto 3em;
+
 }
 .btn {
   width: 80%;
@@ -139,4 +145,13 @@ button:hover, .list-display li:hover {
 }
 .cast-portrait {
   height: 5em;
+}
+
+
+.genres-list {
+  width: 50%;
+  text-align: center;
+  margin: auto;
+  background-color: #E8A87C;
+  border-radius: 50%; 
 }

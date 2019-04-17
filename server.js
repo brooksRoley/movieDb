@@ -11,27 +11,27 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // API Declaration
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = '808cabea1582db02810d3c942e6781f8';
-let configuration = `${BASE_URL}/configuration?api_key=${API_KEY}`;
 
-
-app.get('/api/popular', (req, res) => {
-	let url = `${BASE_URL}/movie/popular?api_key=${API_KEY}`;
-	console.log(req);
-	console.log(res);
-
-	// let data = https.get(url, (movieList) => {
-	// 	return movieList;
-	// });
-	// console.log(data);
-
-	res.send(data);
+// Get Genres
+app.get('/api/genres', (req, res) => {
+  return https.get(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`, (genres) => {
+    // console.log('statusCode:', genres.statusCode);
+    // console.log('headers:', genres.headers);
+    genres.on('data', (d) => {
+      process.stdout.write(d);
+      res.send(d);
+    });
+  }).on('error', (e) => {
+    console.error(e);
+  })
 });
 
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
+// Post Review
+app.post('/api/review', (req, res) => {
+  let { review } = req.body;
   res.send(
-    `I received your POST request. This is what you sent me: ${req.body.post}`,
+    `I received your POST request. This is what you sent me: ${review}.
+    This is where we would persist data with a database or cache it in the node server.`,
   );
 });
 
