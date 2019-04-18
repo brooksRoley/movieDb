@@ -119,8 +119,12 @@ button:hover, .list-display li:hover {
   width: 80%;
   text-align: center;
   margin: 0 auto 3em;
-
 }
+
+.movie-details form {
+  clear: both;
+}
+
 .btn {
   width: 80%;
   margin: .5rem;

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-
-import { BASE_URL, API_KEY} from './constants';
 import PopularList from './components/PopularList';
 import Genres from './components/Genres';
 
@@ -18,7 +16,7 @@ class App extends Component {
   };
 
   callApi = async () => {
-    const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
+    const response = await fetch('/api/popular');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
@@ -27,8 +25,7 @@ class App extends Component {
   handleSearch = async e => {
     e.preventDefault();
     const { post } = this.state;
-    const searchUrl = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=en-US&query=${post}`;
-    const response = await fetch(searchUrl, {
+    const response = await fetch(`/api/search/movie/${post}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

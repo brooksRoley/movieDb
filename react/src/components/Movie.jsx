@@ -1,5 +1,5 @@
 import React from 'react';
-import { BASE_URL, API_KEY, IMG_API, IMAGE_NOT_FOUND } from '../constants';
+import { IMG_API, IMAGE_NOT_FOUND } from '../constants';
 
 export default class Movie extends React.Component {
   constructor(props){
@@ -18,19 +18,18 @@ export default class Movie extends React.Component {
 
   getMovie = async e => {
     const id = this.props.match.params[0];
-    const searchUrl = `${BASE_URL}/movie/${id}?api_key=${API_KEY}`;
-    const fetchMovie = await fetch(searchUrl, {
+    const fetchMovie = await fetch(`/api/movie/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
-    });
-    const fetchCast = await fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`, {
+    }).catch(error => console.error(error));
+    const fetchCast = await fetch(`/api/cast/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       }
-    });
+    }).catch(error => console.error(error));
 
     let movie = await fetchMovie.text();
     let castAndCrew = await fetchCast.text();
@@ -42,16 +41,13 @@ export default class Movie extends React.Component {
   postReview = async e => {
     e.preventDefault();
     let { review } = this.state;
-    console.log(review)
     if(!!review){
       const postReview = await fetch('/api/review', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         mode: "cors", // no-cors, cors, *same-origin
         credentials: "same-origin", // include, *same-origin, omit
-        body: JSON.stringify({
-          review
-        }),
+        body: JSON.stringify({ review }),
       });
       let response = await postReview.text();
       alert(response);
@@ -103,6 +99,8 @@ export default class Movie extends React.Component {
             )
           })}
         </ul>
+
+        <p></p>
 
         <form onSubmit={this.postReview}>
           <input
