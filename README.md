@@ -15,3 +15,4 @@ in a separate terminal tab,
 ``` cd react```
 ``` npm install```
 ``` npm start```
+to start the react application that depends on the backend node application to make requests to the movie DB.
