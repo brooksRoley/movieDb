@@ -5,6 +5,7 @@ To run this repository, make sure you have npm installed, clone a copy of it.
 
 inside the repo, run
 ``` npm install request```
+``` npm install body-parser```
 ``` npm install express```
 
 in the movieDb folder, run 
