@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
-const https = require('https');
+const request = require('request');
 
 // Express Configuration:
 app.use(bodyParser.json());
@@ -12,17 +12,46 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = '808cabea1582db02810d3c942e6781f8';
 
+// Get Popular
+app.get('/api/popular', (req, res) => {
+  request(`${BASE_URL}/movie/popular?api_key=${API_KEY}`, (err, response, body) => {
+    if (err) { return console.log(err); }
+    res.send(body);
+  })
+});
+
+// Get Search
+app.get('/api/search/movie/:id', (req, res) => {
+  let id = req.params.id;
+  request(`${BASE_URL}/search/movie/?api_key=${API_KEY}&language=en-US&query=${id}`, (err, response, body) => {
+    if (err) { return console.log(err); }
+    res.send(body);
+  })
+});
+
+// Get Movie
+app.get('/api/movie/:id', (req, res) => {
+  let id = req.params.id;
+  request(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`, (err, response, body) => {
+    if (err) { return console.log(err); }
+    res.send(body);
+  })
+})
+
+// Get Cast
+app.get('/api/cast/:id', (req, res) => {
+  let id = req.params.id;
+  request(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`, (err, response, body) => {
+    if (err) { return console.log(err); }
+    res.send(body);
+  })
+})
+
 // Get Genres
 app.get('/api/genres', (req, res) => {
-  return https.get(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`, (genres) => {
-    // console.log('statusCode:', genres.statusCode);
-    // console.log('headers:', genres.headers);
-    genres.on('data', (d) => {
-      process.stdout.write(d);
-      res.send(d);
-    });
-  }).on('error', (e) => {
-    console.error(e);
+  request(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`, (err, response, body) => {
+    if (err) { return console.log(err); }
+    res.send(body);
   })
 });
 
