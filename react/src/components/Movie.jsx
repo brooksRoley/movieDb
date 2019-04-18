@@ -77,7 +77,9 @@ export default class Movie extends React.Component {
       <div className="movie-details">
         <button onClick={this.navigateBack} className="btn"> Back to movie search</button>
         
-        <h1>Title: {title}</h1>
+        <h1>Title:</h1>
+        <h2>{title}</h2>
+
         { poster && <img className="poster" src={`${IMG_API}${poster}`} alt={`${title}-poster`} /> }
         
         <h1>Synopsis:</h1>
