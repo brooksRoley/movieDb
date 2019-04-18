@@ -16,3 +16,6 @@ in a separate terminal tab,
 ``` npm install```
 ``` npm start```
 to start the react application that depends on the backend node application to make requests to the movie DB.
+
+
+the node server should be running on localhost:5000 and the react server should be running on localhost:3000 and sends it's proxy to 5000.
