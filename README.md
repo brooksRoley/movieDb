@@ -15,3 +15,12 @@ in a separate terminal tab,
 to start the react application that depends on the backend node application to make requests to the movie DB.
 
 the node server should be running on localhost:5000 and the react server should be running on localhost:3000 and sends it's proxy to 5000.
+
+
+#To Do List:
+1. Filter data returned from API on the backend to improve performance.
+2. Implement Redux for a front end data store to pass data between pages and limit slow api calls.
+3. Implement server side rendering with some templates and implement hydration on the front end to improve performance.
+4. When clicking a genre, fill the list with a page that fits that genre / close the genre open. (add animation?)
+5. On /post/review, attach that review list as comments beneath the movie. Choose whether the review will be compiled by user or movie or both? How do I want to persist that data? How do I want to track user authentication (this would be a good oauth practice)?
+6. Click cast member <li> to see list of their movies.
