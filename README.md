@@ -18,7 +18,7 @@ the node server should be running on localhost:5000 and the react server should 
 
 
 #To Do List:
-1. Filter data returned from API on the backend to improve performance.
+1. Filter data returned from API on the backend to improve performance after deciding on feature set and knowing what pieces are relevant.
 2. Implement Redux for a front end data store to pass data between pages and limit slow api calls.
 3. Implement server side rendering with some templates and implement hydration on the front end to improve performance.
 4. When clicking a genre, fill the list with a page that fits that genre / close the genre open. (add animation?)
