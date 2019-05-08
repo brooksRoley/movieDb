@@ -52,11 +52,11 @@ export default class Movie extends React.Component {
     movie = JSON.parse(movie);
     castAndCrew = JSON.parse(castAndCrew);
     let cast = castAndCrew.cast || [];
-    cast = cast.slice(0,6);
+    cast = cast.slice(0,9);
 
     similarList = JSON.parse(similarList);
     similarList = similarList.results || [];
-    similarList = similarList.slice(0,6);
+    similarList = similarList.slice(0,9);
     this.setState({ movie, cast, similarList });
   }
  
@@ -96,8 +96,6 @@ export default class Movie extends React.Component {
 
     return (
       <div className="movie-details">
-        <button onClick={this.navigateBack} className="btn"> Back to movie search</button>
-        
         <h1>Title:</h1>
         <h2>{title}</h2>
 
@@ -150,12 +148,12 @@ export default class Movie extends React.Component {
                   <p>{title}</p>
                   {poster_path && <img className="cast-portrait" src={`${IMG_API}${poster_path}`} alt={`movie-portrait`} />}
                   {!poster_path && <img className="cast-portrait" src={IMAGE_NOT_FOUND} alt="404" />}
-
                 </li>
               </Link>
             )
           })}
         </ul>
+        <button onClick={this.navigateBack} className="btn"> Back to movie search</button>
       </div>
     );
   }

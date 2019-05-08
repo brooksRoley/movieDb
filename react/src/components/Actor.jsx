@@ -42,6 +42,7 @@ export default class Actor extends React.Component {
     let credits = await fetchCredits.text();
     credits = JSON.parse(credits);
     let { cast } = credits;
+    cast = cast.slice(0, 9)
 
     this.setState({
       picture: profile_path,
@@ -58,7 +59,6 @@ export default class Actor extends React.Component {
   render(){
     let {credits, picture, dob, bio} = this.state;
     bio = bio || "Not Found";
-
     return(
       <div className="movie-details">
         {picture && <img src={`${IMG_API}${picture}`} alt={`actor-portrait`} />}
@@ -87,6 +87,7 @@ export default class Actor extends React.Component {
         }
         </ul>
 
+        <button className="btn" onClick={this.props.history.goBack}>Back to Previous Movie</button>
         <button className="btn" onClick={this.navigateBack}>Back to Popular List</button>
       </div>
     )
