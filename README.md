@@ -23,4 +23,6 @@ the node server should be running on localhost:5000 and the react server should 
 3. Implement server side rendering with some templates and implement hydration on the front end to improve performance.
 4. When clicking a genre, fill the list with a page that fits that genre / close the genre open. (add animation?)
 5. On /post/review, attach that review list as comments beneath the movie. Choose whether the review will be compiled by user or movie or both? How do I want to persist that data? How do I want to track user authentication (this would be a good oauth practice)?
-6. Click cast member li to see list of their movies.
+6. As a user, I should be able to type in a search term, and see results immediately as I type
+(Bonus) Limit network requests to only happen after a pause, and not every keystroke
+7. Move the <Actor /> component to open as a modal instead of as a route.
