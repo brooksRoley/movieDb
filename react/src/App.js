@@ -8,6 +8,8 @@ class App extends Component {
   state = {
     post: '',
     list: [],
+    typing: false,
+    typingTimeout: 0,
   };
 
   componentDidMount() {
@@ -26,19 +28,34 @@ class App extends Component {
     return body;
   };
 
-  handleSearch = async e => {
-    e.preventDefault();
+  handleSearch = async () => {
     const { post } = this.state;
-    const response = await fetch(`/api/search/movie/${post}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const body = await response.text();
-    const results = JSON.parse(body).results
-    this.setState({ list: results });
+    if (!!post) {
+      const response = await fetch(`/api/search/movie/${post}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const body = await response.text();
+      const results = JSON.parse(body).results;
+      this.setState({ list: results });
+    }
   };
+
+  handleSearchTyping = (e) => {
+    // Init a timeout variable to be used below
+    // Clear the timeout if it has already been set.
+    // This will prevent the previous task from executing
+    // if it has been less than <MILLISECONDS>
+    let timeout = null;
+    clearTimeout(timeout);
+    let self = this;
+    timeout = setTimeout(function () {
+        self.handleSearch();
+    }, 1000);
+    this.setState({ post: e.target.value });
+  }
 
   handlePageClick = (e) => {
     let {selected} = e;
@@ -57,17 +74,13 @@ class App extends Component {
           Movie Database Application
         </header>
 
-        <form onSubmit={this.handleSearch}>
-          <input
-            type="text"
-            value={post}
-            placeholder="Search by movie title"
-            className="search-box"
-            onChange={e => this.setState({ post: e.target.value })}
-          />
-          <br />
-          <button type="submit">Search</button>
-        </form>
+        <input
+          type="text"
+          value={post}
+          placeholder="Search by movie title"
+          className="search-box"
+          onChange={this.handleSearchTyping}
+        />
 
         <PopularList list={list} />
         <ReactPaginate

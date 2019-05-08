@@ -8,7 +8,7 @@ export default class PopularMovieList extends React.Component {
       <div className="list-display">
         <h1>Movie List</h1>
         <ul>
-          {list.map(movie => {
+          {list && list.map(movie => {
             let {id, title} = movie;
             return (
               <Link to={`/movie/${id}`} key={id} >
