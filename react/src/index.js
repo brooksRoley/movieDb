@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
 import Movie from './components/Movie';
+import Actor from './components/Actor';
 import NotFound from './components/NotFound';
 
 const routing = (
@@ -13,6 +14,7 @@ const routing = (
     <Switch>
       <Route exact path="/" component={App} />
       <Route exact path="/movie/*" component={Movie} />
+      <Route exact path="/actor/*" component={Actor} />
       <Route component={NotFound} />
     </Switch>
   </Router>

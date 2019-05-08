@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import { IMG_API, IMAGE_NOT_FOUND } from '../constants';
 
 export default class Movie extends React.Component {
@@ -6,14 +7,21 @@ export default class Movie extends React.Component {
     super(props);
     this.state = {
       movie: {},
-      castAndCrew: {},
+      cast: [],
       poster: '',
       review: '',
+      similarList: [],
     }
   }
 
   componentDidMount() {
     this.getMovie();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.match.params[0] !== prevProps.match.params[0]){
+      this.getMovie();
+    }
   }
 
   getMovie = async e => {
@@ -30,12 +38,26 @@ export default class Movie extends React.Component {
         'Content-Type': 'application/json',
       }
     }).catch(error => console.error(error));
+    const fetchSimilar = await fetch(`/api/movie/${id}/similar`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    }).catch(error => console.error(error));
 
     let movie = await fetchMovie.text();
     let castAndCrew = await fetchCast.text();
+    let similarList = await fetchSimilar.text();
+
     movie = JSON.parse(movie);
     castAndCrew = JSON.parse(castAndCrew);
-    this.setState({ movie, castAndCrew });
+    let cast = castAndCrew.cast || [];
+    cast = cast.slice(0,6);
+
+    similarList = JSON.parse(similarList);
+    similarList = similarList.results || [];
+    similarList = similarList.slice(0,6);
+    this.setState({ movie, cast, similarList });
   }
  
   postReview = async e => {
@@ -60,8 +82,7 @@ export default class Movie extends React.Component {
   }
 
   render() {
-  	const { movie, castAndCrew, review } = this.state;
-    const { cast } = castAndCrew;
+    const { movie, cast, review, similarList } = this.state;
     const {
       title,
       backdrop_path: poster,
@@ -91,16 +112,19 @@ export default class Movie extends React.Component {
         <h1>Cast:</h1>
         <ul>
           {cast && cast.map(actor => {
-            let { cast_id, character, name, profile_path } = actor;
+            let { id, cast_id, character, name, profile_path } = actor;
             return (
-              <li className="cast-member" key={cast_id}>
-                <p>{name} as {character}</p>
-                {profile_path && <img className="cast-portrait" src={`${IMG_API}${profile_path}`} alt={`${name}-portrait`} />}
-                {!profile_path && <img className="cast-portrait" src={IMAGE_NOT_FOUND} alt="404" />}
-              </li>
+              <Link to={`/actor/${id}`} key={cast_id}>
+                <li className="cast-member">
+                  <p>{name} as {character}</p>
+                  {profile_path && <img className="cast-portrait" src={`${IMG_API}${profile_path}`} alt={`${name}-portrait`} />}
+                  {!profile_path && <img className="cast-portrait" src={IMAGE_NOT_FOUND} alt="404" />}
+                </li>
+              </Link>
             )
           })}
         </ul>
+        <div id="actor-modal"></div>
 
         <p></p>
 
@@ -116,6 +140,22 @@ export default class Movie extends React.Component {
           <button type="submit">Submit</button>
         </form>
 
+        <h1>Similar Movies:</h1>
+        <ul>
+          {similarList && similarList.map(movie => {
+            let { id, title, poster_path } = movie;
+            return (
+              <Link to={`/movie/${id}`} key={id} >
+                <li className="similar-movie">
+                  <p>{title}</p>
+                  {poster_path && <img className="cast-portrait" src={`${IMG_API}${poster_path}`} alt={`movie-portrait`} />}
+                  {!poster_path && <img className="cast-portrait" src={IMAGE_NOT_FOUND} alt="404" />}
+
+                </li>
+              </Link>
+            )
+          })}
+        </ul>
       </div>
     );
   }

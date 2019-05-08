@@ -17,7 +17,7 @@ export default class PopularMovieList extends React.Component {
             );
           })}
         </ul>
-      </div>
+     </div>
     );
   }
 }

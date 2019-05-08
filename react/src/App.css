@@ -135,7 +135,7 @@ button:hover, .list-display li:hover {
   font-size: 16px;
 
 }
-.cast-member {
+.cast-member, .similar-movie {
   float: left;
   width: 30%;
   height: 10rem;
@@ -158,4 +158,20 @@ button:hover, .list-display li:hover {
   margin: auto;
   background-color: #E8A87C;
   border-radius: 50%; 
+}
+
+.pagination li{
+  display: inline-block;
+  margin: 0 1em;
+  padding: 2px;
+  border: solid black 3px;
+  border-radius: .5em;
+  background-color: #E27D60;
+}
+.pagination {
+  width: 75%;
+  margin: 0 auto;
+  padding: 1em 0;
+  border: solid black 3px;
+  background-color: #E8A87C;
 }
